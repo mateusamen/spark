@@ -1,18 +1,19 @@
 # spark_basic
+This is a documentation of Semantix Academy course of Apache Spark. 
 
-## 1-Preparing the dev environment for spark project
-## 2-Projects with Jupyter Notebooks with Python
-## 3-RDD operations
-## 4-Dataframe operations
-## 5-Dataset operations
-## 6-IDE Python and Scala
-## 7-Struct Streaming KAFKA
-## 8-Spark Streaming KAFKA
-## 9-Optimizations and Tuning
+### 1-Preparing the dev environment for spark project
+### 2-Projects with Jupyter Notebooks with Python
+### 3-RDD operations
+### 4-Dataframe operations
+### 5-Dataset operations
+### 6-IDE Python and Scala
+### 7-Struct Streaming KAFKA
+### 8-Spark Streaming KAFKA
+### 9-Optimizations and Tuning
 
 
 
-### 1-The goal here is to prepare the dev environment by installing Apache Spark and frameworks of Big Data Cluster using Docker and Docker Compose in WSL2.
+#### 1-The goal here is to prepare the dev environment by installing Apache Spark and frameworks of Big Data Cluster using Docker and Docker Compose in WSL2.
 
 >Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly.
 
