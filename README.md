@@ -1,7 +1,8 @@
 # spark
-spark_basic
+#spark_basic
 
-The goal here is to install Apache Spark and frameworks of Big Data Cluster using Docker and Docker Compose in WSL2.
+
+##The goal here is to prepare the dev environment by installing Apache Spark and frameworks of Big Data Cluster using Docker and Docker Compose in WSL2.
 
 "Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly."
 
