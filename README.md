@@ -22,6 +22,7 @@ This is a documentation of Semantix Academy course of Apache Spark.
 First we might install Docker and Docker-Compose acessing those links:
 
 [https://docs.docker.com/get-docker/]
+
 [https://docs.docker.com/compose/install/]
 
 
@@ -82,6 +83,7 @@ Creating mateus/data directory inside user dir (the command -p is responsible to
 Checking what's inside user dir by:
 
 ```hdfs dfs -ls -R /user```
+
 ![04- docker dir_tree ls](https://user-images.githubusercontent.com/62483710/123521159-5d5b6100-d68b-11eb-9da2-bf00eed400e1.PNG)
 
 Send files from input to user/mateus/data by:
