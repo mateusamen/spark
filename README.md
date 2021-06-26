@@ -10,7 +10,7 @@ This is a documentation of Semantix Academy course of Apache Spark.
 ### 7-Struct Streaming KAFKA
 ### 8-Spark Streaming KAFKA
 ### 9-Optimizations and Tuning
-
+___
 
 ## 1-Preparing the dev environment for spark project
 #### -The goal here is to prepare the dev environment by installing Apache Spark and frameworks of Big Data Cluster using Docker and Docker Compose in WSL2.
