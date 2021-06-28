@@ -90,6 +90,33 @@ Send files from input to user/mateus/data by:
 
 ```hdfs dfs -put input/* user/mateus/data```
 
+---
+### Using Jupyter Notebook
+The port used is localhost:8889
+First create a PySpark file. 
+
+![05-pyspark_jupyter](https://user-images.githubusercontent.com/62483710/123691514-18226500-d82c-11eb-8e8c-b699c7d6fce8.PNG)
+
+
+Get info from SparkContext and SparkSession:
+
+![05-pyspark_sc_session](https://user-images.githubusercontent.com/62483710/123691534-1e184600-d82c-11eb-9e72-440d8203ed22.PNG)
+
+Set LOG = INFO:
+
+```spark.sparkContext.setLogLevel("INFO")```
+
+List DataBases:
+
+```spark.catalog.listDatabases()```
+
+output:
+
+![07-list_database](https://user-images.githubusercontent.com/62483710/123691783-6899c280-d82c-11eb-83ff-8cd9fdbc7b4d.PNG)
+
+
+
+
 
 
 
