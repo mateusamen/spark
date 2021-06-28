@@ -145,6 +145,7 @@ or we can do straight from Jupyter using ! as shown below:
 ![10_info_jurostable](https://user-images.githubusercontent.com/62483710/123696579-3f7c3080-d832-11eb-9de5-ba8e0d723b45.PNG)
 
 we can see the format parquet and snappy compression.
+
 list tables with catalog:
 
 ```spark.catalog.listTables()```
@@ -156,7 +157,7 @@ output:
 read table juros as Hive table using Dataframe:
 
 ```spark.read.table("juros").show()```
-
+---
 read table juros in parquet format:
 
 ```spark.read.parquet("juros").show()```
