@@ -154,15 +154,15 @@ output:
 
 ![09-list_tables](https://user-images.githubusercontent.com/62483710/123696068-b664f980-d831-11eb-8bfc-78f07937052c.PNG)
 
-read table juros as Hive table using Dataframe:
+read table juros as Hive table using Dataframe
 
 ```spark.read.table("juros").show()```
----
+
 read table juros in parquet format:
 
 ```spark.read.parquet("juros").show()```
 
-
+---
 
 
 
