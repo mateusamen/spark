@@ -114,6 +114,58 @@ output:
 
 ![07-list_database](https://user-images.githubusercontent.com/62483710/123691783-6899c280-d82c-11eb-83ff-8cd9fdbc7b4d.PNG)
 
+Read json file from HDFS
+
+```leitura_dados = spark.read.json(<"path">)```
+
+in this case, the path is: "hdfs://namenode:8020/user/mateus/data/exercises-data/juros_selic/juros_selic.json"
+
+```leitura_dados = spark.read.json("hdfs://namenode:8020/user/mateus/data/exercises-data/juros_selic/juros_selic.json")```
+
+Show data from JSON file read above:
+
+```leitura_dados.show()```
+
+Save Dataframe as Hive Table named juros:
+
+```leitura_dados.write.saveAsTable("juros")```
+
+Check if data was correctly saved, going to WLS, enter namenode container by ```docker exec -it namenode bash```
+
+then:
+
+```hdfs dfs -ls -R /user/hive```
+
+output:
+
+![08_ls_hdfs](https://user-images.githubusercontent.com/62483710/123695608-21fa9700-d831-11eb-977a-3f0f7d1d88cc.PNG)
+
+or we can do straight from Jupyter using ! as shown below:
+
+![10_info_jurostable](https://user-images.githubusercontent.com/62483710/123696579-3f7c3080-d832-11eb-9de5-ba8e0d723b45.PNG)
+
+we can see the format parquet and snappy compression.
+list tables with catalog:
+
+```spark.catalog.listTables()```
+
+output:
+
+![09-list_tables](https://user-images.githubusercontent.com/62483710/123696068-b664f980-d831-11eb-8bfc-78f07937052c.PNG)
+
+read table juros as Hive table using Dataframe:
+
+```spark.read.table("juros").show()```
+
+read table juros in parquet format:
+
+```spark.read.parquet("juros").show()```
+
+
+
+
+
+
 
 
 
