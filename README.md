@@ -2,7 +2,7 @@
 This is a documentation of Semantix Academy course of Apache Spark. 
 
 ### 1-Preparing the dev environment for spark project
-### 2-Projects with Jupyter Notebooks with Python
+### 2-Jupyter Notebooks project with Python
 ### 3-RDD operations
 ### 4-Dataframe operations
 ### 5-Dataset operations
