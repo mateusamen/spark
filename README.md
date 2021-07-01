@@ -164,6 +164,24 @@ read table juros in parquet format:
 
 ---
 
+## RDD operations
+
+Acess external dataset from local file system. Use ```sparkContext's textFile ``` method. 
+
+```logs = sc.textFile("file:///opt/spark/logs/")```
+
+count the number of lines(output must be 30:
+
+```logs.count()```
+
+read first line: 
+
+```logs.first()```
+
+
+
+
+
 
 
 
