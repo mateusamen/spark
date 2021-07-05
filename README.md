@@ -3,7 +3,7 @@ This is a documentation of Semantix Academy course of Apache Spark.
 ___
 
 ### 1-Preparing the dev environment for spark project
-#### -The goal here is to prepare the dev environment by installing Apache Spark and frameworks of Big Data Cluster using Docker and Docker Compose in WSL2.
+#### The goal here is to prepare the dev environment by installing Apache Spark and frameworks of Big Data Cluster using Docker and Docker Compose in WSL2.
 
 >Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly.
 
@@ -226,7 +226,8 @@ palavras_bigger1.saveAsTextFile("user/mateus/logs_count_word")
 ---
 
 ### 4 - Spark Schema
-
+---
+##### DataFrame Schema
    4.1 - Create df name_us_sem_schema to read file in HDFS "/user/mateus/data/exercises-data/names"
  - First check file format:
 
@@ -323,8 +324,82 @@ output:
 
 ![17-4 6](https://user-images.githubusercontent.com/62483710/124490692-cd06d580-dd88-11eb-94c6-f55504f4e310.PNG)
 
+---
+##### DataSet Schema
 
+First, using WSL, enter Jupyter-Spark container by:
 
+```docker exec -it jupyter-spark bash```
+
+then, execute ```spark-shell```
+
+output:
+
+![18-spark-shell_dataset](https://user-images.githubusercontent.com/62483710/124503634-5a075a00-dd9c-11eb-80cf-917e697cea46.PNG)
+
+read file in HDFS /user/mateus/data/exercises-data/names
+
+```scala
+scala> val names_us = spark.read.csv("/user/mateus/data/exercises-data/names")
+```
+
+print schema
+
+```scala
+scala> names_us.printSchema
+```
+
+show first 5 registers:
+
+```scala
+scala> names_us.show(5)
+```
+
+output for the 3 steps shown above (read file, print schema and show registers):
+
+![19-dataset_red-1](https://user-images.githubusercontent.com/62483710/124504469-ed8d5a80-dd9d-11eb-8c8d-db489c30be90.PNG)
+
+Create case class nascimento for data in name_us:
+
+```scala
+ scala> case class Nascimento(name:String,sex:String,qtd:Int)
+```
+
+import Enconders:
+
+```scala
+scala> import org.apache.spark.sql.Encoders
+```
+
+create schema:
+
+```scala
+scala> val schema = Encoders.product[Nascimento].schema
+```
+
+create dataset name_ds
+
+```scala
+scala> val names_ds = spark.read.schema(schema).csv("/user/mateus/data/exercises-data/names").as[Nascimento]
+```
+
+show first 5 registers:
+
+```scala
+scala> names_ds.show(5)
+```
+
+output:
+
+![20-ds](https://user-images.githubusercontent.com/62483710/124506418-fc760c00-dda1-11eb-9384-1ee7a7f2577d.PNG)
+
+save dataset names_ds parquet format snappy compression:
+
+```scala 
+scala> names_ds.write.parquet("/user/mateus/names_us_parquet")
+```
+
+---
 
 
 
