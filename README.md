@@ -91,7 +91,7 @@ Send files from input to user/mateus/data by:
 ```hdfs dfs -put input/* user/mateus/data```
 
 ---
-### Using Jupyter Notebook
+### 2-Using Jupyter Notebook
 The port used is localhost:8889
 First create a PySpark file. 
 
@@ -164,25 +164,174 @@ read table juros in parquet format:
 
 ---
 
-## RDD operations
+## 3-RDD operations
 
-Acess external dataset from local file system. Use *sparkContext's textFile* method. 
+-Acess external dataset from local file system. Use *sparkContext's textFile* method. 
 
 ```logs = sc.textFile("file:///opt/spark/logs/")```
 
-count the number of lines(output must be 30:
+-count the number of lines(output must be 30):
 
 ```logs.count()```
 
-read first line: 
+-read first line: 
 
 ```logs.first()```
 
+-Count number of words in logs file(output must be 268):
+
+```pyspark
+words = logs.flatMap( lambda line : line.split(" "))
+words.count()
+```
+
+- change to lowercase all the words in *logs file*, then check the first 30 elements:
+
+```pyspark
+lower_case_words = logs.map( lambda lc : lc.lower())
+lower_case_words.take(30)
+```
+
+- Remove the words with length less and equal to 2:
+
+```pyspark
+size_words = words.filter( lambda palavra : len(palavra)<=2)
+
+```
+
+-Count the number of times each word appears:
+
+```pyspark
+p_cv = words.map( lambda palavra : (palavra,1))
+p_red = p_cv.reduceByKey( lambda key1 , key2 : key1 + key2)
+```
+
+-count number of words repeated:
+
+```pyspark
+p_red.count()
+```
+
+-Sort by the number of times the word appears:
+
+```pyspark
+palavras_ordem = p_red.sortBy( lambda palavra : -palavra[1])
+```
+
+-Filter by words that appears more than one time:
+
+```pyspark
+palavras_bigger1 = palavras_ordem.filter( lambda palavra : palavra[1]>1)
+```
+
+output must be something like that:
+
+![11-PALAVRAS_ORDEMgt1](https://user-images.githubusercontent.com/62483710/124358010-ac0d7b80-dbf4-11eb-99e1-18a8c252ca52.PNG)
+
+-save RDD in directory HDFS /user/mateus/logs_count_word
+
+```pyspark
+palavras_bigger1.saveAsTextFile("user/mateus/logs_count_word")
+```
+---
+
+### 4- Spark Schema
+
+4.1 - Create df name_us_sem_schema to read file in HDFS "/user/mateus/data/exercises-data/names"
+ - First check file format:
+
+```! hdfs dfs -ls -R /user/mateus/data/exercises-data/names```
+
+output:
+
+![12- 4 1](https://user-images.githubusercontent.com/62483710/124490466-80bb9580-dd88-11eb-9e46-68323ae04526.PNG)
 
 
+then create df:
+
+```names_us_sem_schema = spark.read.csv("/user/mateus/data/exercises-data/names")```
+
+4.2- Visualize Schema and show 5 registers
+
+```
+names_us_sem_schema.take(5)
+```
+
+output:
+
+![13-4 2](https://user-images.githubusercontent.com/62483710/124490588-a8126280-dd88-11eb-9bb7-15056e73ea1f.PNG)
 
 
+```
+names_us_sem_schema.schema
+```
+output:
 
+![14-4 3](https://user-images.githubusercontent.com/62483710/124490562-a052be00-dd88-11eb-9256-12b6dfedba6a.PNG)
+
+
+4.3- Create df name_us to read file in HDFS "/user/mateus/data/exercises-data/names" with following schema:
+ - name: String
+ - sexo: String
+ - qtd: integer
+
+4.3.1 - first import pyspark.sql.types module
+
+```
+from pyspark.sql.types import *
+```
+4.3.2 - Create Struct Field and Struct Type
+
+```
+list_structure = [
+    StructField("nome", StringType()),
+    StructField("sexo", StringType()),
+    StructField("qtd", IntegerType())
+]
+
+names_schema = StructType(list_structure)
+```
+4.3.3 - Associate name_us to structType(name_schema)  
+
+```
+name_us = spark.read.csv("/user/mateus/data/exercises-data/names",schema=(names_schema))
+```
+
+4.4- Visualize schema and show 5 registers:
+
+```
+name_us.schema
+```
+
+output:
+
+![15-4 4](https://user-images.githubusercontent.com/62483710/124490632-b95b6f00-dd88-11eb-85ee-a6aa7a9d946a.PNG)
+
+
+```
+name_us.show(5)
+```
+
+output:
+
+![16-4 5](https://user-images.githubusercontent.com/62483710/124490672-c5dfc780-dd88-11eb-8196-624337488e07.PNG)
+
+
+4.5- Save df name_us with orc format in HDFS "/user/mateus/data/exercises-data/names_us_orc"
+
+```
+name_us.write.orc("/user/mateus/data/exercises-data/names_us_orc")
+```
+
+4.6- Check if file was successfully saved:
+
+```
+! hdfs dfs -ls /user/mateus/data/exercises-data/names_us_orc
+```
+
+output:
+
+![17-4 6](https://user-images.githubusercontent.com/62483710/124490692-cd06d580-dd88-11eb-94c6-f55504f4e310.PNG)
 
 
 
