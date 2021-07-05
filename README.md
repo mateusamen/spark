@@ -227,7 +227,7 @@ palavras_bigger1.saveAsTextFile("user/mateus/logs_count_word")
 
 ### 4 - Spark Schema
 
-     4.1 - Create df name_us_sem_schema to read file in HDFS "/user/mateus/data/exercises-data/names"
+   4.1 - Create df name_us_sem_schema to read file in HDFS "/user/mateus/data/exercises-data/names"
  - First check file format:
 
 ```! hdfs dfs -ls -R /user/mateus/data/exercises-data/names```
@@ -241,7 +241,7 @@ then create df:
 
 ```names_us_sem_schema = spark.read.csv("/user/mateus/data/exercises-data/names")```
 
-    4.2- Visualize Schema and show 5 registers
+   4.2- Visualize Schema and show 5 registers
 
 ```
 names_us_sem_schema.take(5)
@@ -260,17 +260,17 @@ output:
 ![14-4 3](https://user-images.githubusercontent.com/62483710/124490562-a052be00-dd88-11eb-9256-12b6dfedba6a.PNG)
 
 
-    4.3- Create df name_us to read file in HDFS "/user/mateus/data/exercises-data/names" with following schema:
+   4.3- Create df name_us to read file in HDFS "/user/mateus/data/exercises-data/names" with following schema:
  - name: String
  - sexo: String
  - qtd: integer
 
-       4.3.1 - first import pyspark.sql.types module
+   4.3.1 - first import pyspark.sql.types module
 
 ```
 from pyspark.sql.types import *
 ```
-       4.3.2 - Create Struct Field and Struct Type
+   4.3.2 - Create Struct Field and Struct Type
 
 ```
 list_structure = [
@@ -281,13 +281,13 @@ list_structure = [
 
 names_schema = StructType(list_structure)
 ```
-       4.3.3 - Associate name_us to structType(name_schema)  
+   4.3.3 - Associate name_us to structType(name_schema)  
 
 ```
 name_us = spark.read.csv("/user/mateus/data/exercises-data/names",schema=(names_schema))
 ```
 
-    4.4- Visualize schema and show 5 registers:
+   4.4- Visualize schema and show 5 registers:
 
 ```
 name_us.schema
@@ -307,13 +307,13 @@ output:
 ![16-4 5](https://user-images.githubusercontent.com/62483710/124490672-c5dfc780-dd88-11eb-8196-624337488e07.PNG)
 
 
-     4.5- Save df name_us with orc format in HDFS "/user/mateus/data/exercises-data/names_us_orc"
+   4.5- Save df name_us with orc format in HDFS "/user/mateus/data/exercises-data/names_us_orc"
 
 ```
 name_us.write.orc("/user/mateus/data/exercises-data/names_us_orc")
 ```
 
-     4.6- Check if file was successfully saved:
+   4.6- Check if file was successfully saved:
 
 ```
 ! hdfs dfs -ls /user/mateus/data/exercises-data/names_us_orc
