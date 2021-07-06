@@ -393,7 +393,7 @@ output:
 
 ![20-ds](https://user-images.githubusercontent.com/62483710/124506418-fc760c00-dda1-11eb-9384-1ee7a7f2577d.PNG)
 
-save dataset names_ds parquet format snappy compression:
+save dataset names_ds with parquet format snappy compression:
 
 ```scala 
 scala> names_ds.write.parquet("/user/mateus/names_us_parquet")
@@ -401,7 +401,17 @@ scala> names_ds.write.parquet("/user/mateus/names_us_parquet")
 
 ---
 
+#### 5- Data functions
 
+-Create dataframe to read file */user/mateus/data/juros_selic/juros_selic*
 
+-Change data field type to "MM/dd/yyyy"
 
+-Using function * from_unixtime*, create field "ano_unix" with year information in field *data*
+
+-Using *substring*, create field "ano_str" with year information in field *data*
+
+-Using *split* function, create field "ano_str" with year information in field *data*
+
+-Save in HDFS "/user/mateus/juros_selic_americano" in CSV format.
 
