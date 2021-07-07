@@ -425,7 +425,7 @@ Let's import *pyspark.sql.functions* module first
 ```pyspark
 from pyspark.sql.functions import *
 ```
---now using *unix_timestamp* to convert stringtype to timestamp. Then using *from_unixtime* to alter field in column timestamp
+-now using *unix_timestamp* to convert stringtype to timestamp. Then using *from_unixtime* to alter field in column timestamp
 
 ```pyspark
 df_2 = df_1.withColumn("data", from_unixtime(unix_timestamp(col("data"),"dd/MM/yyyy"),"MM/dd/yyyy"))
@@ -455,4 +455,31 @@ df_split_1 = df_split.withColumn("ano_split", col("ano_split").getItem(2))
 
 ```pyspark
 df_split_1.write.csv("/user/mateus/data/juros_selic_american",header="true")
+```
+
+---
+The goal here is to create a dataframe from *juros_selic*, creating a column with *min, max* and *avg* values, order by year.
+This will be done using function *cast, regexp_replace and agregattions*
+
+
+import ```from pyspark.sql.types import *```
+
+replace character from , to . in "valor" column using *regexp_replace*
+we use the function df_3, that has already a column *ano_unix* with information of the year.
+
+```pyspark
+df_3n = df_3.withColumn("valor",regexp_replace(col("valor"),",","."))
+```
+
+then, change data type using *cast*:
+
+```pyspark
+df_format = df_3n.withColumn("valor", col("valor").cast(FloatType()))
+```
+
+now, create new columns "media", with avg of values, "minimo" and maximo using *min and max* functions.
+
+```pyspark
+df_group = df_format.groupBy("ano_unix").agg(avg("valor").alias("media"),min("valor").alias("minimo"),max("valor").alias("maximo")).sort(asc("ano_unix"))
+df_group_correct = df_group.withColumn("media", format_number("media",2)).show(40)
 ```
