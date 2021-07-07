@@ -483,3 +483,6 @@ now, create new columns "media", with avg of values, "minimo" and maximo using *
 df_group = df_format.groupBy("ano_unix").agg(avg("valor").alias("media"),min("valor").alias("minimo"),max("valor").alias("maximo")).sort(asc("ano_unix"))
 df_group_correct = df_group.withColumn("media", format_number("media",2)).show(40)
 ```
+the output:
+
+![22-outputagg](https://user-images.githubusercontent.com/62483710/124815163-54954580-df3d-11eb-9867-ab6099129cd6.PNG)
