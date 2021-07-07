@@ -403,15 +403,56 @@ scala> names_ds.write.parquet("/user/mateus/names_us_parquet")
 
 #### 5- Data functions
 
+All exercices below were done using Jupyter Notebook
+Use *-cat* to see the file. 
+
+```
+! hdfs dfs -cat /user/mateus/data/exercises-data/juros_selic/juros_selic
+```
+output (from the output we can see the data type, presence of header and separator ;. This information will be usefull to read file in correct manner:
+
+![21-functions_1](https://user-images.githubusercontent.com/62483710/124693534-fffab780-deb5-11eb-9c20-4cef24de739c.PNG)
+
 -Create dataframe to read file */user/mateus/data/juros_selic/juros_selic*
 
--Change data field type to "MM/dd/yyyy"
+```pyspark
+df_1 = spark.read.csv("/user/mateus/data/exercises-data/juros_selic/juros_selic",header="true",sep=";")
+```
 
--Using function * from_unixtime*, create field "ano_unix" with year information in field *data*
+-Change data field type to "MM/dd/yyyy:
+Let's import *pyspark.sql.functions* module first
 
--Using *substring*, create field "ano_str" with year information in field *data*
+```pyspark
+from pyspark.sql.functions import *
+```
+--now using *unix_timestamp* to convert stringtype to timestamp. Then using *from_unixtime* to alter field in column timestamp
+
+```pyspark
+df_2 = df_1.withColumn("data", from_unixtime(unix_timestamp(col("data"),"dd/MM/yyyy"),"MM/dd/yyyy"))
+
+```
+
+-Using function *from_unixtime*, create field "ano_unix" with year information in field "data"
+
+```pyspark
+df_3 = df_1.withColumn("ano_unix", from_unixtime(unix_timestamp(col("data"),"dd/MM/yyyy"),"yyyy"))
+```
+
+-Using *substring*, create field "ano_str" with year information in field "data"
+
+```pyspark
+df_sub = df_1.withColumn("ano_str", substring(col("data"),7,4))
+```
 
 -Using *split* function, create field "ano_str" with year information in field *data*
 
--Save in HDFS "/user/mateus/juros_selic_americano" in CSV format.
+```pyspark
+df_split = df_1.withColumn("ano_split", split(col("data"),"/"))
+df_split_1 = df_split.withColumn("ano_split", col("ano_split").getItem(2))
+```
 
+-Save in HDFS "/user/mateus/data/juros_selic_americano" in CSV format.
+
+```pyspark
+df_split_1.write.csv("/user/mateus/data/juros_selic_american",header="true")
+```
