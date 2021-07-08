@@ -486,3 +486,47 @@ df_group_correct = df_group.withColumn("media", format_number("media",2)).show(4
 the output:
 
 ![22-outputagg](https://user-images.githubusercontent.com/62483710/124815163-54954580-df3d-11eb-9867-ab6099129cd6.PNG)
+
+---
+
+6 - ### Spark Streaming
+
+In spark container, install netcat:
+
+```apt update```
+``` apt install netcat```
+
+![23-netcatinsta](https://user-images.githubusercontent.com/62483710/124845799-d56c3580-df6d-11eb-83e6-23cd2f0a8288.PNG)
+
+ Create an application to read data from localhost:9999
+-First we might start frmo spark container:
+
+```nc -lp 9999```
+
+then, using Jupyter Notebook, import the following modules:
+
+```pyspark
+from pyspark import SparkContext
+from pyspark.streaming import StreamingContext
+```
+create Streaming Context by:
+
+```pyspark
+ssc = StreamingContext(sc,2)
+```
+
+Create DStream to read from port:9999 and then read. 
+
+```pyspark
+read_Str = ssc.socketTextStream("localhost", 9999)
+read_Str.pprint()
+```
+
+Start stream context by:
+
+```pyspark
+ssc.start()
+```
+It will start the process and receive all data sent by port:9999 in microbatches each 2 seconds.
+
+---
