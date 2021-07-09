@@ -489,7 +489,7 @@ the output:
 
 ---
 
-6 - ### Spark Streaming
+### 6 - Spark Streaming
 
 In spark container, install netcat:
 
@@ -530,3 +530,7 @@ ssc.start()
 It will start the process and receive all data sent by port:9999 in microbatches each 2 seconds.
 
 ---
+
+### 7 - Spark Streaming and Kafka
+
+
