@@ -494,7 +494,9 @@ the output:
 In spark container, install netcat:
 
 ```apt update```
+
 ``` apt install netcat```
+
 
 ![23-netcatinsta](https://user-images.githubusercontent.com/62483710/124845799-d56c3580-df6d-11eb-83e6-23cd2f0a8288.PNG)
 
@@ -527,10 +529,13 @@ Start stream context by:
 ```pyspark
 ssc.start()
 ```
+
 It will start the process and receive all data sent by port:9999 in microbatches each 2 seconds.
 
 ---
 
 ### 7 - Spark Streaming and Kafka
+
+
 
 
