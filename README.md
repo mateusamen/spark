@@ -501,7 +501,7 @@ In spark container, install netcat:
 ![23-netcatinsta](https://user-images.githubusercontent.com/62483710/124845799-d56c3580-df6d-11eb-83e6-23cd2f0a8288.PNG)
 
  Create an application to read data from localhost:9999
--First we might start frmo spark container:
+-First we might start from spark container:
 
 ```nc -lp 9999```
 
